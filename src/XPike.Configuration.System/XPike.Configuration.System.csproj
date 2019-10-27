@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Authors>xPike Development Team</Authors>
+    <Company>xPike Project</Company>
+    <Description>xPike Configuration - System.Configuration Provider</Description>
+    <Copyright>MIT License, Copyright (C) 2019 - xPike contributors</Copyright>
+    <PackageProjectUrl>http://xpike.visualstudio.com</PackageProjectUrl>
+    <PackageIconUrl>https://grifball.blob.core.windows.net/cdn/xpike.png</PackageIconUrl>
+    <RepositoryUrl>https://xpike@dev.azure.com/xpike/xpike/_git/xpike</RepositoryUrl>
+    <RepositoryType>NuGet</RepositoryType>
+    <PackageTags>xPike</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="XPike.IoC" Version="1.0.3"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XPike.Configuration\XPike.Configuration.csproj" />
+  </ItemGroup>
+
+  <!-- .NET Standard 2.0 references, compilation flags and build options -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETSTD</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
+  </ItemGroup>
+
+
+  <!-- .NET 4.5 references, compilation flags and build options -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' ">
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
+    <DefineConstants>NETFX</DefineConstants>
+  </PropertyGroup>
+
+</Project>
