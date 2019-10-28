@@ -12,11 +12,14 @@ namespace XPikeConfig.Controllers
     {
         private readonly IConfigurationService _configService;
         private readonly IConfiguration _config;
-
-        public HomeController(IConfigurationService configService, IConfiguration config)
+        private readonly IConfig<SomeConfig> _someConfig;
+        private readonly IConfig<AnotherConfig> _anotherConfig;
+        public HomeController(IConfigurationService configService, IConfiguration config, IConfig<SomeConfig> someConfig, IConfig<AnotherConfig> anotherConfig)
         {
             _configService = configService;
             _config = config;
+            _someConfig = someConfig;
+            _anotherConfig = anotherConfig;
         }
 
         public IActionResult Index()
@@ -41,6 +44,9 @@ namespace XPikeConfig.Controllers
 
             ViewData["value2-1"] = _configService.GetValue<DateTime>("Example.Library.AnotherConfig::AnotherDate");
             ViewData["value2-2"] = _config["Example:Library:AnotherConfig:AnotherDate"];
+
+            ViewData["someconfig"] = JsonConvert.SerializeObject(_someConfig);
+            ViewData["anotherconfig"] = JsonConvert.SerializeObject(_anotherConfig);
 
             return View();
         }

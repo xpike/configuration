@@ -22,6 +22,8 @@ The library that defines your configuration POCO(s) does not need to reference a
 You can load your configuration settings into the POCO in one of two ways - either by using the `IConfigurationService` or through an injection wrapper, `IConfig<T>`.
 
 ```csharp
+using XPike.Configuration;
+
 public class MyController : ApiController
 {
     private readonly IConfigurationService _configService;
@@ -34,13 +36,12 @@ public class MyController : ApiController
     }
 
     [HttpGet]
-    public IActionResult GetName()
-    {
-        if (_config.Name == _configService.GetValue<SomeConfig>("Example.Library.SomeConfig")
-            return Ok("Values haven't changed!");
+    public IActionResult GetNameFromIConfig() =>
+        Ok(_config.Name);
 
-        return NotFound();
-    }
+    [HttpGet]
+    public IActionResult GetNameManually() =>
+        Ok(_configService.GetValue<SomeConfig>("Example.Library.SomeConfig").Name);
 }
 ```
 
@@ -57,6 +58,8 @@ You can inject the `IConfigurationService` anywhere in your application, and rea
 Based on the provider used, this may come from configuration which was pre-loaded at startup, or may be loaded on-demand at runtime.
 
 ```csharp
+using XPike.Configuration;
+
 public class MyController : ApiController
 {
     private readonly IConfigurationService _configService;
@@ -67,10 +70,8 @@ public class MyController : ApiController
     }
 
     [HttpGet]
-    public IActionResult GetName()
-    {
-        return Ok(_configuration.GetValueOrDefault("Example:Library:SomeConfig:Name", "name unknown");
-    }
+    public IActionResult GetName() =>
+        Ok(_configuration.GetValueOrDefault("Example.Library::PromotionEndDate", DateTime.Now);
 }
 ```
 
@@ -78,7 +79,7 @@ You should always try to specify a reasonable default value in case a setting is
 For situations where you have a required setting and this is not possible, there is an overload which will throw an exception when no setting is found:
 
 ```csharp
-    _configService.GetValue<string>("Example:Library:SomeConfig:Name");
+    _configService.GetValue<string>("Example.Library::AnotherConfig");
 ```
 
 ## ASP.NET Compatibility
@@ -90,7 +91,28 @@ This is the recommended approach to ensure consistent values are returned throug
 XPike Configuration Providers are loaded as providers to Microsoft's `IConfiguration`.
 And Microsoft's `IConfiguration` is used as the provider for XPike's `IConfigurationService`.
 
-TODO
+You will need to add a call to `AddXPikeConfiguration()` in `Program.cs`:
+
+```csharp
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>()
+                        .AddXPikeConfiguration(config =>
+                        {
+                            config.AddProvider(new MemoryConfigurationProvider(new Dictionary<string, string>
+                            {
+                                {"Example.Library.SomeConfig", "{\"Name\": \"Name Found!\"}"},
+                                {"Example.Library.SomeConfig::SomeDate", "10/28/2019 2:21:40 AM"}
+                            }));
+                        });
+        });
+```
+
+The above example is when using ASP.NET Core 3.
+If you're using an earlier version of the framework, add the call directly to the `IWebHostBuilder` instead,
+just after the call to `CreateDefaultBuilder()`.
 
 ### Microsoft -> XPike
 
