@@ -37,7 +37,54 @@ namespace XPike.Configuration
         {
             try
             {
-                return JsonConvert.DeserializeObject<T>(GetValue(key));
+                var value = GetValue(key);
+
+                if (typeof(T) == typeof(string))
+                    return (T) (object) value;
+
+                if (typeof(T) == typeof(byte))
+                    return (T)(object)byte.Parse(value);
+
+                if (typeof(T) == typeof(short))
+                    return (T)(object)short.Parse(value);
+
+                if (typeof(T) == typeof(ushort))
+                    return (T)(object)ushort.Parse(value);
+
+                if (typeof(T) == typeof(int))
+                    return (T) (object) int.Parse(value);
+
+                if (typeof(T) == typeof(uint))
+                    return (T)(object)uint.Parse(value);
+
+                if (typeof(T) == typeof(long))
+                    return (T) (object) long.Parse(value);
+
+                if (typeof(T) == typeof(ulong))
+                    return (T)(object)ulong.Parse(value);
+
+                if (typeof(T) == typeof(float))
+                    return (T) (object) float.Parse(value);
+
+                if (typeof(T) == typeof(double))
+                    return (T) (object) double.Parse(value);
+
+                if (typeof(T) == typeof(decimal))
+                    return (T) (object) decimal.Parse(value);
+
+                if (typeof(T) == typeof(bool))
+                    return (T) (object) bool.Parse(value);
+
+                if (typeof(T).IsEnum)
+                    return (T) Enum.Parse(typeof(T), value);
+
+                if (typeof(T) == typeof(TimeSpan))
+                    return (T) (object) TimeSpan.Parse(value);
+
+                if (typeof(T) == typeof(DateTime))
+                    return (T) (object) DateTime.Parse(value);
+
+                return JsonConvert.DeserializeObject<T>(value);
             }
             catch (InvalidConfigurationException)
             {

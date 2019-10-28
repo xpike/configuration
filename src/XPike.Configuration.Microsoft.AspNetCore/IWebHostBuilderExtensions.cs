@@ -4,9 +4,9 @@ using XPike.IoC.Microsoft;
 
 namespace XPike.Configuration.Microsoft.AspNetCore
 {
-    public static class IHostBuilderExtensions
+    public static class IWebHostBuilderExtensions
     {
-        public static IWebHostBuilder AddXPikeLogging(this IWebHostBuilder hostBuilder, Action<IXPikeConfigBuilder> configBuilderSetup)
+        public static IWebHostBuilder AddXPikeConfiguration(this IWebHostBuilder hostBuilder, Action<IXPikeConfigBuilder> configBuilderSetup)
         {
             // Wire registered XPike Configuration Providers into Microsoft IConfiguration
             hostBuilder.ConfigureAppConfiguration((context, configBuilder) =>

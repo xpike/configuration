@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace XPike.Configuration.Microsoft.AspNetCore
 {
@@ -17,6 +18,7 @@ namespace XPike.Configuration.Microsoft.AspNetCore
             this;
 
         public override void Load() =>
-            Data = _configService.Load();
+            Data = _configService.Load()
+                .ToDictionary(x => x.Key.Replace(".", ":").Replace("::", ":"), x => x.Value);
     }
 }

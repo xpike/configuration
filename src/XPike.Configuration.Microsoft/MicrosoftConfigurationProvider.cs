@@ -53,8 +53,10 @@ namespace XPike.Configuration.Microsoft
         {
             try
             {
-                return _configuration[key] ?? 
-                    CreateJson(_configuration.GetSection(key)) ??
+                var actualKey = key.Replace(".", ":").Replace("::", ":");
+
+                return _configuration[actualKey] ?? 
+                    CreateJson(_configuration.GetSection(actualKey)) ??
                     defaultValue;
             }
             catch (Exception)

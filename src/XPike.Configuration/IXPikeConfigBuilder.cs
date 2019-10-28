@@ -18,13 +18,13 @@
         /// </summary>
         /// <typeparam name="TProvider"></typeparam>
         /// <param name="instance"></param>
-        void AddProvider(IConfigurationProvider instance);
+        IXPikeConfigBuilder AddProvider(IConfigurationProvider instance);
 
         /// <summary>
         /// Clears the list of registered Configuration Providers.
         /// Calling this after Build() will throw an exception.
         /// </summary>
-        void ClearProviders();
+        IXPikeConfigBuilder ClearProviders();
 
         /// <summary>
         /// Constructs and returns the Configuration Service using the registered Configuration Providers.

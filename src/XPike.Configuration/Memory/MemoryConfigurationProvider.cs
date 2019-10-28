@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace XPike.Configuration.Memory
 {
@@ -19,7 +20,7 @@ namespace XPike.Configuration.Memory
 
         public MemoryConfigurationProvider(IDictionary<string, string> configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration.ToDictionary(x => x.Key, x => x.Value);
         }
 
         public override string GetValueOrDefault(string key, string defaultValue = null)
