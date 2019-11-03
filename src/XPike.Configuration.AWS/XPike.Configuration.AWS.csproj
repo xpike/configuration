@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="../common.build.props"/>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <Description>xPike Configuration provider for AWS Simple System Management.</Description>
+    <PackageTags>$(PackageTags);AWS;AWSSDK</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
