@@ -24,6 +24,7 @@ pr:
       - test
 jobs:
   - job:
+    displayName: "Build, Test, Package"
     pool:
       vmImage: windows-latest
     steps:
