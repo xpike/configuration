@@ -1,4 +1,6 @@
-﻿namespace XPike.Configuration
+﻿using System.Threading.Tasks;
+
+namespace XPike.Configuration
 {
     /// <summary>
     /// Defines a Configuration Provider, the most-granular source of configuration values in XPike.
@@ -14,6 +16,8 @@
         /// <returns></returns>
         string GetValue(string key);
 
+        Task<string> GetValueAsync(string key);
+
         /// <summary>
         /// Retrieves a "required" Configuration Value of the desired type T from the specified Key.
         /// If not value exists, or if conversion fails, an InvalidConfigurationException will be thrown.
@@ -22,6 +26,8 @@
         /// <param name="key"></param>
         /// <returns></returns>
         T GetValue<T>(string key);
+
+        Task<T> GetValueAsync<T>(string key);
 
         /// <summary>
         /// Retrieves an "optional" Configuration Value from the specified Key.
@@ -32,6 +38,8 @@
         /// <returns></returns>
         string GetValueOrDefault(string key, string defaultValue = null);
 
+        Task<string> GetValueOrDefaultAsync(string key, string defaultValue = null);
+
         /// <summary>
         /// Retrieves an "optional" Configuration Value of the desired type T from the specified Key.
         /// If no value exists, or if conversion fails, the specified defaultValue will be returned instead.
@@ -41,5 +49,7 @@
         /// <param name="defaultValue"></param>
         /// <returns></returns>
         T GetValueOrDefault<T>(string key, T defaultValue = default);
+
+        Task<T> GetValueOrDefaultAsync<T>(string key, T defaultValue = default);
     }
 }

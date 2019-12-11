@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
 namespace XPike.Configuration.Microsoft
@@ -55,9 +58,9 @@ namespace XPike.Configuration.Microsoft
             {
                 var actualKey = key.Replace(".", ":").Replace("::", ":");
 
-                return _configuration[actualKey] ?? 
-                    CreateJson(_configuration.GetSection(actualKey)) ??
-                    defaultValue;
+                return _configuration[actualKey] ??
+                       CreateJson(_configuration.GetSection(actualKey)) ??
+                       defaultValue;
             }
             catch (Exception)
             {
@@ -66,5 +69,14 @@ namespace XPike.Configuration.Microsoft
                 return defaultValue;
             }
         }
+
+        public override Task<string> GetValueOrDefaultAsync(string key, string defaultValue = null) =>
+            Task.FromResult(GetValueOrDefault(key, defaultValue));
+
+        public IDictionary<string, string> Load() =>
+            _configuration.AsEnumerable().ToDictionary(x => x.Key, x => x.Value);
+
+        public Task<IDictionary<string, string>> LoadAsync() =>
+            Task.FromResult(Load());
     }
 }

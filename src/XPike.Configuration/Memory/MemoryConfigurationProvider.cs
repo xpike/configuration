@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace XPike.Configuration.Memory
 {
@@ -27,9 +28,7 @@ namespace XPike.Configuration.Memory
         {
             try
             {
-                return _configuration.TryGetValue(key, out var value) ?
-                    value :
-                    defaultValue;
+                return _configuration.TryGetValue(key, out var value) ? value : defaultValue;
             }
             catch (Exception)
             {
@@ -39,7 +38,13 @@ namespace XPike.Configuration.Memory
             }
         }
 
+        public override Task<string> GetValueOrDefaultAsync(string key, string defaultValue = null) =>
+            Task.FromResult(GetValueOrDefault(key, defaultValue));
+
         public IDictionary<string, string> Load() =>
             _configuration;
+
+        public Task<IDictionary<string, string>> LoadAsync() =>
+            Task.FromResult(Load());
     }
 }

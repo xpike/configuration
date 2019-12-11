@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using XPike.Configuration.Memory;
 using Xunit;
 
@@ -39,12 +40,12 @@ namespace XPike.Configuration.Tests
         }
 
         [Fact]
-        public void Test_GetObject()
+        public async Task Test_GetObjectAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var obj = service.GetValue<TestObject>("Some.Library.Config");
+            var obj = await service.GetValueAsync<TestObject>("Some.Library.Config");
 
             Assert.NotNull(obj);
             Assert.Equal(obj.Name, _EXPECTED_NAME);
@@ -57,74 +58,74 @@ namespace XPike.Configuration.Tests
             var service = CreateService();
             Assert.NotNull(service);
 
-            var obj = service.GetValueOrDefault<TestObject>("some.library.config");
+            var obj = service.GetValueOrDefaultAsync<TestObject>("some.library.config");
 
             Assert.Null(obj);
         }
 
         [Fact]
-        public void Test_GetObjectJson()
+        public async Task Test_GetObjectJsonAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var str = service.GetValue<string>("Some.Library.Config");
+            var str = await service.GetValueAsync<string>("Some.Library.Config");
 
             Assert.NotNull(str);
             Assert.Equal(str, GetJson());
         }
 
         [Fact]
-        public void Test_GetDateTime()
+        public async Task Test_GetDateTimeAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var dt = service.GetValue<DateTime>("Some.DateTime");
+            var dt = await service.GetValueAsync<DateTime>("Some.DateTime");
 
             Assert.Equal(dt, _testDateTime);
         }
 
         [Fact]
-        public void Test_GetBool()
+        public async Task Test_GetBoolAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var b = service.GetValue<bool>("Some.Bool");
+            var b = await service.GetValueAsync<bool>("Some.Bool");
 
             Assert.True(b);
         }
 
         [Fact]
-        public void Test_GetInt()
+        public async Task Test_GetIntAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var i = service.GetValue<int>("Some.Int");
+            var i = await service.GetValueAsync<int>("Some.Int");
 
             Assert.Equal(i, _testInt);
         }
 
         [Fact]
-        public void Test_GetDecimal()
+        public async Task Test_GetDecimalAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var d = service.GetValue<decimal>("Some.Decimal");
+            var d = await service.GetValueAsync<decimal>("Some.Decimal");
 
             Assert.Equal(d, _testDecimal);
         }
 
         [Fact]
-        public void Test_GetTimeSpan()
+        public async Task Test_GetTimeSpanAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var ts = service.GetValue<TimeSpan>("Some.TimeSpan");
+            var ts = await service.GetValueAsync<TimeSpan>("Some.TimeSpan");
 
             Assert.Equal(ts, _testTimeSpan);
         }
