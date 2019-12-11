@@ -5,7 +5,8 @@
     /// Microsoft.Extensions.Configuration.IConfiguration service.
     /// </summary>
     public interface IMicrosoftConfigurationProvider
-        : IConfigurationProvider
+        : IConfigurationProvider,
+          IConfigurationLoader
     {
     }
 }

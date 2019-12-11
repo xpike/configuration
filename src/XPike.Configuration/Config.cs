@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace XPike.Configuration
 {
@@ -6,17 +7,48 @@ namespace XPike.Configuration
         : IConfig<TConfig>
         where TConfig : class
     {
-        public TConfig Value { get; }
+        private readonly IConfigurationService _configurationService;
+
+        public TConfig CurrentValue { get; protected set; }
 
         public string ConfigurationKey { get; }
 
-        public DateTime RetrievedUtc { get; }
+        public DateTime RetrievedUtc { get; protected set; }
 
-        public Config(string configKey, TConfig config)
+        public Config(string configKey, TConfig config, IConfigurationService configurationService)
         {
             ConfigurationKey = configKey;
-            Value = config;
+            CurrentValue = config;
             RetrievedUtc = DateTime.UtcNow;
+            _configurationService = configurationService;
+        }
+
+        public TConfig GetLatestValue()
+        {
+            try
+            {
+                CurrentValue = _configurationService.GetValue<TConfig>(ConfigurationKey);
+                RetrievedUtc = DateTime.UtcNow;
+            }
+            catch (Exception)
+            {
+            }
+
+            return CurrentValue;
+        }
+
+        public async Task<TConfig> GetLatestValueAsync()
+        {
+            try
+            {
+                CurrentValue = await _configurationService.GetValueAsync<TConfig>(ConfigurationKey);
+                RetrievedUtc = DateTime.UtcNow;
+            }
+            catch (Exception)
+            {
+            }
+
+            return CurrentValue;
         }
     }
 }

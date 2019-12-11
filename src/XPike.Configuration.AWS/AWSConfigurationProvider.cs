@@ -2,6 +2,7 @@
 using Amazon.SimpleSystemsManagement.Model;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace XPike.Configuration.AWS
 {
@@ -28,21 +29,18 @@ namespace XPike.Configuration.AWS
             _client = new AmazonSimpleSystemsManagementClient();
         }
 
-        /// <summary>
-        /// TODO: Make this async, so we don't have to use .GetAwaiter().GetResult().
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public override string GetValueOrDefault(string key, string defaultValue = null)
+        public override string GetValueOrDefault(string key, string defaultValue = null) =>
+            GetValueOrDefaultAsync(key, defaultValue).GetAwaiter().GetResult();
+
+        public override async Task<string> GetValueOrDefaultAsync(string key, string defaultValue = null)
         {
             try
             {
-                var response = _client.GetParameterAsync(new GetParameterRequest
+                var response = await _client.GetParameterAsync(new GetParameterRequest
                 {
                     Name = key,
                     WithDecryption = true
-                }).GetAwaiter().GetResult();
+                });
 
                 return (response.HttpStatusCode == HttpStatusCode.OK ?
                     response?.Parameter?.Value : defaultValue) ?? defaultValue;

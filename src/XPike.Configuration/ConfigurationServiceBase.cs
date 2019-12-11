@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace XPike.Configuration
 {
@@ -24,7 +25,7 @@ namespace XPike.Configuration
 
         protected readonly IList<TProvider> _providers;
 
-        public ConfigurationServiceBase(IEnumerable<TProvider> providers)
+        protected ConfigurationServiceBase(IEnumerable<TProvider> providers)
         {
             _providers = providers.ToList();
 
@@ -48,6 +49,20 @@ namespace XPike.Configuration
             }
         }
 
+        public async Task<string> GetValueOrDefaultAsync(string key, string defaultValue = null)
+        {
+            try
+            {
+                return await GetValueAsync(key) ?? defaultValue;
+            }
+            catch (Exception)
+            {
+                // TODO: Do we want to dump this to console/debug/trace output?
+
+                return defaultValue;
+            }
+        }
+
         public string GetValue(string key)
         {
             string value;
@@ -57,6 +72,25 @@ namespace XPike.Configuration
                 try
                 {
                     if ((value = provider.GetValue(key)) != null)
+                        return value;
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            throw new InvalidConfigurationException(key);
+        }
+
+        public async Task<string> GetValueAsync(string key)
+        {
+            string value;
+
+            foreach (var provider in _providers)
+            {
+                try
+                {
+                    if ((value = await provider.GetValueAsync(key)) != null)
                         return value;
                 }
                 catch (Exception)
@@ -86,11 +120,42 @@ namespace XPike.Configuration
             throw new InvalidConfigurationException(key);
         }
 
+        public async Task<T> GetValueAsync<T>(string key)
+        {
+            T value;
+
+            foreach (var provider in _providers)
+            {
+                try
+                {
+                    if ((value = await provider.GetValueAsync<T>(key)) != null)
+                        return value;
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            throw new InvalidConfigurationException(key);
+        }
+
         public T GetValueOrDefault<T>(string key, T defaultValue = default)
         {
             try
             {
                 return GetValue<T>(key);
+            }
+            catch (Exception)
+            {
+                return defaultValue;
+            }
+        }
+
+        public async Task<T> GetValueOrDefaultAsync<T>(string key, T defaultValue = default)
+        {
+            try
+            {
+                return await GetValueAsync<T>(key);
             }
             catch (Exception)
             {
@@ -111,6 +176,25 @@ namespace XPike.Configuration
                     continue;
 
                 foreach (var setting in loader.Load())
+                    dict[setting.Key] = setting.Value;
+            }
+
+            return dict;
+        }
+
+        public async Task<IDictionary<string, string>> LoadAsync()
+        {
+            var dict = new Dictionary<string, string>();
+
+            // NOTE: Work from lowest to highest priority, to allow for proper coalescing of values.
+            for (var i = _providers.Count - 1; i >= 0; --i)
+            {
+                var loader = _providers[i] as IConfigurationLoader;
+
+                if (loader == null)
+                    continue;
+
+                foreach (var setting in await loader.LoadAsync())
                     dict[setting.Key] = setting.Value;
             }
 

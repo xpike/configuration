@@ -1,13 +1,19 @@
 <Project>
   <PropertyGroup>
-	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <Authors>xPike Committers</Authors>
-    <Company>xPike Project</Company>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Authors>xPike contributors</Authors>
     <PackageIcon>xpike-pacakge-icon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/xpike/documentation/blob/master/docfx_project/index.md</PackageProjectUrl>
+    <Company>xPike Project</Company>
+    <Copyright>MIT License, Copyright (C) 2019 - xPike contributors</Copyright>
+    <PackageProjectUrl>https://xpike.github.io/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xpike/configuration</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageTags>xPike;microservices;configuration</PackageTags>
+    <PackageReleaseNotes>https://github.com/xpike/configuration/blob/master/CHANGELOG.md</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\xpike-pacakge-icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\xpike-package-icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace XPike.Configuration
 {
@@ -18,5 +19,8 @@ namespace XPike.Configuration
         /// </summary>
         /// <returns></returns>
         IDictionary<string, string> Load();
+
+        Task<IDictionary<string, string>> LoadAsync();
+
     }
 }

@@ -7,11 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPike.Configuration", "XPik
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{671550BF-9B30-406F-ACB1-CAAAD75F11B1}"
 	ProjectSection(SolutionItems) = preProject
-		..\.editorconfig = ..\.editorconfig
-		..\.gitignore = ..\.gitignore
+		..\CHANGELOG.md = ..\CHANGELOG.md
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
-		..\xpike-pacakge-icon.png = ..\xpike-pacakge-icon.png
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPike.Configuration.System", "XPike.Configuration.System\XPike.Configuration.System.csproj", "{2C980C15-6AE2-44BA-99EC-1C07CD2C61B9}"
@@ -22,18 +20,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPike.Configuration.Microso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPike.Configuration.Azure", "XPike.Configuration.Azure\XPike.Configuration.Azure.csproj", "{5F2B54D5-A516-44F1-A008-B05E22C2253C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E50A92E4-4BA5-48FA-9709-72BB33186495}"
-	ProjectSection(SolutionItems) = preProject
-		common.build.props = common.build.props
-		multitarget.build.props = multitarget.build.props
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPike.Configuration.AWS", "XPike.Configuration.AWS\XPike.Configuration.AWS.csproj", "{28D0F529-577C-41E2-819E-CCCDAB9BC6C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FF56C231-7FAB-424A-89A3-44EB20A05595}"
 	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
+		..\azurepipelines.yml = ..\azurepipelines.yml
 		common.build.props = common.build.props
 		multitarget.build.props = multitarget.build.props
+		..\xpike-package-icon.png = ..\xpike-package-icon.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{8879F96B-8AB1-4CA8-99A8-DCF74FFA631C}"
@@ -42,11 +38,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8F8CC86F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netcore3", "netcore3", "{1D4C73E2-17F7-4519-8692-0346C2C0A0C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPikeConfig", "..\examples\netcore3\XPikeConfig\XPikeConfig.csproj", "{604D8949-07EB-4D40-BF8D-5A8E2505E186}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPikeConfig", "..\examples\netcore3\XPikeConfig\XPikeConfig.csproj", "{604D8949-07EB-4D40-BF8D-5A8E2505E186}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Library", "Example.Library\Example.Library.csproj", "{F1983336-B083-461E-B846-736303F7ABA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Library", "Example.Library\Example.Library.csproj", "{F1983336-B083-461E-B846-736303F7ABA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPike.Configuration.Tests", "..\tests\XPike.Configuration.Tests\XPike.Configuration.Tests.csproj", "{33AE190D-E2DA-4701-9A34-842BB89DA2C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPike.Configuration.Tests", "..\tests\XPike.Configuration.Tests\XPike.Configuration.Tests.csproj", "{33AE190D-E2DA-4701-9A34-842BB89DA2C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2B9E7E70-752A-4F50-9E44-184BB469953F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

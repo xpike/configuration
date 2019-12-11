@@ -92,7 +92,7 @@ XPike Configuration Providers are loaded as providers to Microsoft's `IConfigura
 And Microsoft's `IConfiguration` is used as the provider for XPike's `IConfigurationService`.
 
 You will need to add a call to `AddXPikeConfiguration()` in `Program.cs`:
-
+1
 ```csharp
 public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)

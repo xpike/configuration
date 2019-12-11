@@ -1,5 +1,6 @@
 ﻿using Azure.ApplicationModel.Configuration;
 using System;
+using System.Threading.Tasks;
 
 namespace XPike.Configuration.Azure
 {
@@ -31,6 +32,19 @@ namespace XPike.Configuration.Azure
             try
             {
                 var response = _client.Get(key);
+                return response.Value?.Value ?? defaultValue;
+            }
+            catch (Exception)
+            {
+                return defaultValue;
+            }
+        }
+
+        public override async Task<string> GetValueOrDefaultAsync(string key, string defaultValue = null)
+        {
+            try
+            {
+                var response = await _client.GetAsync(key);
                 return response.Value?.Value ?? defaultValue;
             }
             catch (Exception)

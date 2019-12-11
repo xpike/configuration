@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace XPike.Configuration
 {
@@ -16,8 +17,14 @@ namespace XPike.Configuration
         public string ConfigurationKey =>
             _config.ConfigurationKey;
 
-        public TConfig Value =>
-            _config.Value;
+        public TConfig CurrentValue =>
+            _config.CurrentValue;
+
+        public Task<TConfig> GetLatestValueAsync() =>
+            _config.GetLatestValueAsync();
+
+        public TConfig GetLatestValue() =>
+            _config.GetLatestValue();
 
         public DateTime RetrievedUtc =>
             _config.RetrievedUtc;
