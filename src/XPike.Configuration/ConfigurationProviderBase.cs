@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace XPike.Configuration
@@ -79,34 +80,34 @@ namespace XPike.Configuration
                     return (T)(object)value;
 
                 if (typeof(T) == typeof(byte))
-                    return (T)(object)byte.Parse(value);
+                    return (T) (object) byte.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(short))
-                    return (T)(object)short.Parse(value);
+                    return (T) (object) short.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(ushort))
-                    return (T)(object)ushort.Parse(value);
+                    return (T) (object) ushort.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(int))
-                    return (T)(object)int.Parse(value);
+                    return (T) (object) int.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(uint))
-                    return (T)(object)uint.Parse(value);
+                    return (T) (object) uint.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(long))
-                    return (T)(object)long.Parse(value);
+                    return (T) (object) long.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(ulong))
-                    return (T)(object)ulong.Parse(value);
+                    return (T) (object) ulong.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(float))
-                    return (T)(object)float.Parse(value);
+                    return (T) (object) float.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(double))
-                    return (T)(object)double.Parse(value);
+                    return (T) (object) double.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(decimal))
-                    return (T)(object)decimal.Parse(value);
+                    return (T) (object) decimal.Parse(value, NumberFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(bool))
                     return (T)(object)bool.Parse(value);
@@ -115,10 +116,10 @@ namespace XPike.Configuration
                     return (T)Enum.Parse(typeof(T), value);
 
                 if (typeof(T) == typeof(TimeSpan))
-                    return (T)(object)TimeSpan.Parse(value);
+                    return (T) (object) TimeSpan.Parse(value, DateTimeFormatInfo.InvariantInfo);
 
                 if (typeof(T) == typeof(DateTime))
-                    return (T)(object)DateTime.Parse(value);
+                    return (T) (object) DateTime.Parse(value, DateTimeFormatInfo.InvariantInfo);
 
                 return JsonConvert.DeserializeObject<T>(value);
             }
@@ -132,7 +133,7 @@ namespace XPike.Configuration
         {
             try
             {
-                var value = await GetValueAsync(key);
+                var value = await GetValueAsync(key).ConfigureAwait(false);
 
                 return ConvertValue<T>(key, value);
             }

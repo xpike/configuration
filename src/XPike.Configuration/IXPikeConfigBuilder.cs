@@ -16,7 +16,6 @@
         /// These will be used to construct the Configuration Service.
         /// Calling this after Build() will throw an exception.
         /// </summary>
-        /// <typeparam name="TProvider"></typeparam>
         /// <param name="instance"></param>
         IXPikeConfigBuilder AddProvider(IConfigurationProvider instance);
 

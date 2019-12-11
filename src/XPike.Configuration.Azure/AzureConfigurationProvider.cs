@@ -44,7 +44,7 @@ namespace XPike.Configuration.Azure
         {
             try
             {
-                var response = await _client.GetAsync(key);
+                var response = await _client.GetConfigurationSettingAsync(key).ConfigureAwait(false);
                 return response.Value?.Value ?? defaultValue;
             }
             catch (Exception)
