@@ -53,7 +53,7 @@ namespace XPike.Configuration
         {
             try
             {
-                return await GetValueAsync(key) ?? defaultValue;
+                return await GetValueAsync(key).ConfigureAwait(false) ?? defaultValue;
             }
             catch (Exception)
             {
@@ -90,7 +90,7 @@ namespace XPike.Configuration
             {
                 try
                 {
-                    if ((value = await provider.GetValueAsync(key)) != null)
+                    if ((value = await provider.GetValueAsync(key).ConfigureAwait(false)) != null)
                         return value;
                 }
                 catch (Exception)
@@ -128,7 +128,7 @@ namespace XPike.Configuration
             {
                 try
                 {
-                    if ((value = await provider.GetValueAsync<T>(key)) != null)
+                    if ((value = await provider.GetValueAsync<T>(key).ConfigureAwait(false)) != null)
                         return value;
                 }
                 catch (Exception)
@@ -155,7 +155,7 @@ namespace XPike.Configuration
         {
             try
             {
-                return await GetValueAsync<T>(key);
+                return await GetValueAsync<T>(key).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -194,7 +194,7 @@ namespace XPike.Configuration
                 if (loader == null)
                     continue;
 
-                foreach (var setting in await loader.LoadAsync())
+                foreach (var setting in await loader.LoadAsync().ConfigureAwait(false))
                     dict[setting.Key] = setting.Value;
             }
 

@@ -45,19 +45,25 @@ namespace XPike.Configuration
             new Config<TConfig>(ConfigurationKey, PostConfigure(_configService.GetValue<TConfig>(ConfigurationKey)), _configService);
 
         public virtual async Task<IConfig<TConfig>> GetConfigAsync() =>
-            new Config<TConfig>(ConfigurationKey, PostConfigure(await _configService.GetValueAsync<TConfig>(ConfigurationKey)), _configService);
+            new Config<TConfig>(ConfigurationKey,
+                PostConfigure(await _configService.GetValueAsync<TConfig>(ConfigurationKey)
+                    .ConfigureAwait(false)),
+                _configService);
 
         public IConfig<TConfig> GetConfigOrDefault(TConfig defaultValue) =>
             new Config<TConfig>(ConfigurationKey, PostConfigure(_configService.GetValueOrDefault<TConfig>(ConfigurationKey, defaultValue)), _configService);
 
         public virtual async Task<IConfig<TConfig>> GetConfigOrDefaultAsync(TConfig defaultValue) =>
-            new Config<TConfig>(ConfigurationKey, PostConfigure(await _configService.GetValueOrDefaultAsync<TConfig>(ConfigurationKey, defaultValue)), _configService);
+            new Config<TConfig>(ConfigurationKey,
+                PostConfigure(await _configService.GetValueOrDefaultAsync<TConfig>(ConfigurationKey, defaultValue)
+                    .ConfigureAwait(false)),
+                _configService);
 
         public TConfig GetValue() =>
             GetConfig().CurrentValue;
 
         public virtual async Task<TConfig> GetValueAsync() =>
-            (await GetConfigAsync()).CurrentValue;
+            (await GetConfigAsync().ConfigureAwait(false)).CurrentValue;
 
         /* Helper Methods for configuration value retrieval */
 

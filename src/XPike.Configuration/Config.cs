@@ -41,7 +41,8 @@ namespace XPike.Configuration
         {
             try
             {
-                CurrentValue = await _configurationService.GetValueAsync<TConfig>(ConfigurationKey);
+                CurrentValue = await _configurationService.GetValueAsync<TConfig>(ConfigurationKey)
+                    .ConfigureAwait(false);
                 RetrievedUtc = DateTime.UtcNow;
             }
             catch (Exception)

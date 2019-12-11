@@ -19,7 +19,8 @@ namespace XPike.Configuration.AWS
     /// </summary>
     public class AWSConfigurationProvider
         : ConfigurationProviderBase,
-          IAWSConfigurationProvider
+          IAWSConfigurationProvider,
+          IDisposable
     {
         private readonly AmazonSimpleSystemsManagementClient _client;
 
@@ -37,10 +38,11 @@ namespace XPike.Configuration.AWS
             try
             {
                 var response = await _client.GetParameterAsync(new GetParameterRequest
-                {
-                    Name = key,
-                    WithDecryption = true
-                });
+                    {
+                        Name = key,
+                        WithDecryption = true
+                    })
+                    .ConfigureAwait(false);
 
                 return (response.HttpStatusCode == HttpStatusCode.OK ?
                     response?.Parameter?.Value : defaultValue) ?? defaultValue;
@@ -49,6 +51,18 @@ namespace XPike.Configuration.AWS
             {
                 return defaultValue;
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+                _client?.Dispose();
         }
     }
 }
