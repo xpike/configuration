@@ -1,16 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="../common.build.props"/>
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Authors>xPike Development Team</Authors>
-    <Company>xPike Project</Company>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <Description>xPike Configuration - System.Configuration Provider</Description>
-    <Copyright>MIT License, Copyright (C) 2019 - xPike contributors</Copyright>
-    <PackageProjectUrl>http://xpike.visualstudio.com</PackageProjectUrl>
-    <PackageIconUrl>https://grifball.blob.core.windows.net/cdn/xpike.png</PackageIconUrl>
-    <RepositoryUrl>https://xpike@dev.azure.com/xpike/xpike/_git/xpike</RepositoryUrl>
-    <RepositoryType>NuGet</RepositoryType>
-    <PackageTags>xPike</PackageTags>
+    <PackageTags>$(PackageTags);App.Conig;Web.Config</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +16,7 @@
 
   <!-- .NET Standard 2.0 references, compilation flags and build options -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <DefineConstants>NETSTD</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETSTD</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
@@ -31,11 +24,11 @@
 
 
   <!-- .NET 4.5 references, compilation flags and build options -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461' ">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Configuration" />
   </ItemGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
-    <DefineConstants>NETFX</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
+    <DefineConstants>$(DefineConstants);NETFX</DefineConstants>
   </PropertyGroup>
 
 </Project>

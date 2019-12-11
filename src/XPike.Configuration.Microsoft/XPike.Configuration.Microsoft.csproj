@@ -1,16 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="../common.build.props"/>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Authors>xPike Development Team</Authors>
-    <Company>xPike Project</Company>
-    <Description>xPike Configuration - Microsoft.Extensions Provider</Description>
-    <Copyright>MIT License, Copyright (C) 2019 - xPike contributors</Copyright>
-    <PackageProjectUrl>http://xpike.visualstudio.com</PackageProjectUrl>
-    <PackageIconUrl>https://grifball.blob.core.windows.net/cdn/xpike.png</PackageIconUrl>
-    <RepositoryUrl>https://xpike@dev.azure.com/xpike/xpike/_git/xpike</RepositoryUrl>
-    <RepositoryType>NuGet</RepositoryType>
-    <PackageTags>xPike</PackageTags>
+    <Description>xPike Configuration - Microsoft.Extensions.Configuration Provider</Description>
+    <PackageTags>$(PackageTags);Platform Extensions</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

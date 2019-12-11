@@ -1,6 +1,30 @@
-name: 1.1.$(Rev:r)
+name: $(ReleaseVersionNumber) Build $(Build)
+variables:
+  ReleaseVersionNumber: 1.1.0
+  Build: $[counter(variables['ReleaseVersionNumber'], 1)]
+  PrereleaseVersionNumber: $(ReleaseVersionNumber)-dev$(Build)
+  AssemblyVersion: $(ReleaseVersionNumber).$(Build)
+  InformationalVersion: $(ReleaseVersionNumber) build $(Build)
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - src
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - src
+      - test
 jobs:
   - job:
+    displayName: "Build, Test, Package"
     pool:
       vmImage: windows-latest
     steps:
@@ -18,7 +42,7 @@ jobs:
         displayName: Build
         inputs:
           command: build
-          arguments: --no-restore -c release -p:Version=$(Build.BuildNumber).$(Build.BuildId)
+          arguments: --no-restore -c release -p:Version=$(AssemblyVersion) -p:"InformationalVersion=$(InformationalVersion)"
           projects: |
             src/**/*.csproj
 
@@ -51,7 +75,7 @@ jobs:
         inputs:
           command: custom
           custom: pack
-          arguments: -c release --no-build -p:PackageVersion=$(Build.BuildNumber)-dev$(Build.BuildId) -o $(Build.ArtifactStagingDirectory)
+          arguments: -c release --no-build -p:PackageVersion=$(PrereleaseVersionNumber) -o $(Build.ArtifactStagingDirectory)/unstable
           projects: |
             src/**/*.csproj
 
@@ -60,7 +84,7 @@ jobs:
         inputs:
           command: custom
           custom: pack
-          arguments: -c release --no-build -p:PackageVersion=$(Build.BuildNumber) -o $(Build.ArtifactStagingDirectory)
+          arguments: -c release --no-build -p:PackageVersion=$(ReleaseVersionNumber) -o $(Build.ArtifactStagingDirectory)/stable
           projects: |
             src/**/*.csproj
 

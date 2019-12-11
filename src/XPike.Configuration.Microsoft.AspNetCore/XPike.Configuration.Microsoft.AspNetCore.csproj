@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="../common.build.props"/>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Description>xPike Configuration - Microsoft.Extensions.Configuration Provider and Asp.Net Core</Description>
+    <PackageTags>$(PackageTags);Platform Extensions;AspNetCore</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

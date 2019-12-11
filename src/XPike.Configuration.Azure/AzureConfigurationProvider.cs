@@ -1,4 +1,4 @@
-﻿using Azure.ApplicationModel.Configuration;
+﻿using Azure.Data.AppConfiguration;
 using System;
 using System.Threading.Tasks;
 
@@ -31,7 +31,7 @@ namespace XPike.Configuration.Azure
         {
             try
             {
-                var response = _client.Get(key);
+                var response = _client.GetConfigurationSetting(key);
                 return response.Value?.Value ?? defaultValue;
             }
             catch (Exception)
