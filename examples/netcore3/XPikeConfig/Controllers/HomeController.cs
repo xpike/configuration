@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Example.Library;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -22,9 +23,9 @@ namespace XPikeConfig.Controllers
             _anotherConfig = anotherConfig;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            ViewData["config"] = JsonConvert.SerializeObject(_configService.GetValueAsync<SomeConfig>("Example.Library.SomeConfig"));
+            ViewData["config"] = JsonConvert.SerializeObject(await _configService.GetValueAsync<SomeConfig>("Example.Library.SomeConfig"));
 
             // NOTE: Test not entirely applicable - since IConfiguration does not support de-serialization from an individual key which stores a JSON string.
             //ViewData["config2"] = JsonConvert.SerializeObject(_config.GetSection("Example:Library:SomeConfig").Get<SomeConfig>());
@@ -34,21 +35,21 @@ namespace XPikeConfig.Controllers
             ViewData["config3"] = "N/A - IConfiguration can't access properties of a JSON string.";
             ViewData["config4"] = "N/A - IConfigurationService can't access properties of a JSON string.";
 
-            ViewData["config2-1"] = JsonConvert.SerializeObject(_configService.GetValueAsync<AnotherConfig>("Example.Library.AnotherConfig"));
+            ViewData["config2-1"] = JsonConvert.SerializeObject(await _configService.GetValueAsync<AnotherConfig>("Example.Library.AnotherConfig"));
             ViewData["config2-2"] = JsonConvert.SerializeObject(_config.GetSection("Example:Library:AnotherConfig").Get<SomeConfig>());
-            ViewData["config2-3"] = _configService.GetValueAsync<string>("Example.Library.AnotherConfig::Name");
+            ViewData["config2-3"] = await _configService.GetValueAsync<string>("Example.Library.AnotherConfig::Name");
             ViewData["config2-4"] = _config["Example:Library:AnotherConfig:Name"];
 
-            ViewData["value1"] = _configService.GetValueAsync<DateTime>("Example.Library.SomeConfig::SomeDate");
+            ViewData["value1"] = await _configService.GetValueAsync<DateTime>("Example.Library.SomeConfig::SomeDate");
             ViewData["value2"] = _config["Example:Library:SomeConfig:SomeDate"];
 
-            ViewData["value2-1"] = _configService.GetValueAsync<DateTime>("Example.Library.AnotherConfig::AnotherDate");
+            ViewData["value2-1"] = await _configService.GetValueAsync<DateTime>("Example.Library.AnotherConfig::AnotherDate");
             ViewData["value2-2"] = _config["Example:Library:AnotherConfig:AnotherDate"];
 
             ViewData["someconfig"] = JsonConvert.SerializeObject(_someConfig);
             ViewData["anotherconfig"] = JsonConvert.SerializeObject(_anotherConfig);
 
-            return View();
+            return View("Index");
         }
     }
 }
