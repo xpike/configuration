@@ -26,9 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FF56C231
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
 		..\.gitignore = ..\.gitignore
-		..\azurepipelines.yml = ..\azurepipelines.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		common.build.props = common.build.props
-		multitarget.build.props = multitarget.build.props
 		..\xpike-package-icon.png = ..\xpike-package-icon.png
 	EndProjectSection
 EndProject

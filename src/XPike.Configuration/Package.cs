@@ -67,7 +67,7 @@ namespace XPike.Configuration
             dependencyCollection.RegisterSingleton<IConfigurationService, ConfigurationService>();
 
             dependencyCollection.RegisterSingleton(typeof(IConfigManager<>), typeof(DefaultConfigManager<>));
-            dependencyCollection.RegisterTransient(typeof(IConfig<>), typeof(ConfigLoader<>));
+            dependencyCollection.RegisterSingleton(typeof(IConfig<>), typeof(ConfigLoader<>));
         }
     }
 }

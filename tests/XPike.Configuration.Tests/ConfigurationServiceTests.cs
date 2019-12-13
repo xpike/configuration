@@ -53,12 +53,12 @@ namespace XPike.Configuration.Tests
         }
 
         [Fact]
-        public void Test_GetObject_CaseSensitive()
+        public async Task Test_GetObject_CaseSensitiveAsync()
         {
             var service = CreateService();
             Assert.NotNull(service);
 
-            var obj = service.GetValueOrDefaultAsync<TestObject>("some.library.config");
+            var obj = await service.GetValueOrDefaultAsync<TestObject>("some.library.config");
 
             Assert.Null(obj);
         }

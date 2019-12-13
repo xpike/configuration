@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.1.1]
+
+- Changed `IConfig<T>` to be a singleton injection by default.
+- Fixed up example project to `await` on calls which are now async.
+
 ## [1.1.0]
 
 Added async overloads and related adjustments for performance.
