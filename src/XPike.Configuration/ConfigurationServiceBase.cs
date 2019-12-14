@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XPike.Configuration.Pipeline;
 
 namespace XPike.Configuration
 {
@@ -18,15 +19,22 @@ namespace XPike.Configuration
     /// </summary>
     /// <typeparam name="TProvider"></typeparam>
     public abstract class ConfigurationServiceBase<TProvider>
-        : IConfigurationService
+        : IConfigurationService,
+          IConfigurationPipe
         where TProvider : IConfigurationProvider
     {
         private const string _PROVIDER_NULL = "The list of {0} instances can not contain null values.";
 
+        protected readonly IList<IConfigurationPipe> _pipeline;
         protected readonly IList<TProvider> _providers;
 
         protected ConfigurationServiceBase(IEnumerable<TProvider> providers)
         {
+            _pipeline = new List<IConfigurationPipe>
+            {
+                this
+            };
+
             _providers = providers.ToList();
 
             if (_providers.Any(x => x == null))
@@ -62,8 +70,17 @@ namespace XPike.Configuration
                 return defaultValue;
             }
         }
-
+        
         public string GetValue(string key)
+        {
+            Func<string, string> nextPipe = null;
+            foreach (var pipe in _pipeline)
+                nextPipe = (k) => pipe.PipelineGet(k, nextPipe);
+
+            return nextPipe(key);
+        }
+
+        public string PipelineGet(string key, Func<string, string> next)
         {
             string value;
 
@@ -82,7 +99,16 @@ namespace XPike.Configuration
             throw new InvalidConfigurationException(key);
         }
 
-        public async Task<string> GetValueAsync(string key)
+        public Task<string> GetValueAsync(string key)
+        {
+            Func<string, Task<string>> nextPipe = null;
+            foreach (var pipe in _pipeline)
+                nextPipe = (k) => pipe.PipelineGetAsync(k, nextPipe);
+
+            return nextPipe(key);
+        }
+
+        public async Task<string> PipelineGetAsync(string key, Func<string, Task<string>> next)
         {
             string value;
 
@@ -103,6 +129,15 @@ namespace XPike.Configuration
 
         public T GetValue<T>(string key)
         {
+            Func<string, T> nextPipe = null;
+            foreach (var pipe in _pipeline)
+                nextPipe = (k) => pipe.PipelineGet<T>(k, nextPipe);
+
+            return nextPipe(key);
+        }
+
+        public T PipelineGet<T>(string key, Func<string, T> next)
+        {
             T value;
 
             foreach (var provider in _providers)
@@ -120,7 +155,16 @@ namespace XPike.Configuration
             throw new InvalidConfigurationException(key);
         }
 
-        public async Task<T> GetValueAsync<T>(string key)
+        public Task<T> GetValueAsync<T>(string key)
+        {
+            Func<string, Task<T>> nextPipe = null;
+            foreach (var pipe in _pipeline)
+                nextPipe = (k) => pipe.PipelineGetAsync<T>(k, nextPipe);
+
+            return nextPipe(key);
+        }
+
+        public async Task<T> PipelineGetAsync<T>(string key, Func<string, Task<T>> next)
         {
             T value;
 
@@ -199,6 +243,12 @@ namespace XPike.Configuration
             }
 
             return dict;
+        }
+
+        public void AddToPipeline(IConfigurationPipe pipe)
+        {
+            if (!_pipeline.Contains(pipe))
+                _pipeline.Add(pipe);
         }
     }
 }

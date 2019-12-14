@@ -1,4 +1,6 @@
-﻿namespace XPike.Configuration
+﻿using XPike.Configuration.Pipeline;
+
+namespace XPike.Configuration
 {
     /// <summary>
     /// Represents a Configuration Service, which is the "end-user-facing consumable" from this Package.
@@ -12,5 +14,6 @@
         : IConfigurationProvider,
           IConfigurationLoader
     {
+        void AddToPipeline(IConfigurationPipe pipe);
     }
 }
