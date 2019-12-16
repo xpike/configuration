@@ -74,6 +74,9 @@ namespace XPike.Configuration
 
         public virtual T ConvertValue<T>(string key, string value)
         {
+            if (value == null)
+                throw new InvalidConfigurationException(key);
+
             try
             {
                 if (typeof(T) == typeof(string))
