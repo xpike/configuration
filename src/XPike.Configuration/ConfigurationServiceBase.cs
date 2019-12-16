@@ -75,7 +75,10 @@ namespace XPike.Configuration
         {
             Func<string, string> nextPipe = null;
             foreach (var pipe in _pipeline)
-                nextPipe = (k) => pipe.PipelineGet(k, nextPipe);
+            {
+                var np = nextPipe;
+                nextPipe = (k) => pipe.PipelineGet(k, np);
+            }
 
             return nextPipe(key);
         }
@@ -103,7 +106,10 @@ namespace XPike.Configuration
         {
             Func<string, Task<string>> nextPipe = null;
             foreach (var pipe in _pipeline)
-                nextPipe = (k) => pipe.PipelineGetAsync(k, nextPipe);
+            {
+                var np = nextPipe;
+                nextPipe = (k) => pipe.PipelineGetAsync(k, np);
+            }
 
             return nextPipe(key);
         }
@@ -131,7 +137,10 @@ namespace XPike.Configuration
         {
             Func<string, T> nextPipe = null;
             foreach (var pipe in _pipeline)
-                nextPipe = (k) => pipe.PipelineGet<T>(k, nextPipe);
+            {
+                var np = nextPipe;
+                nextPipe = (k) => pipe.PipelineGet<T>(k, np);
+            }
 
             return nextPipe(key);
         }
@@ -159,7 +168,10 @@ namespace XPike.Configuration
         {
             Func<string, Task<T>> nextPipe = null;
             foreach (var pipe in _pipeline)
-                nextPipe = (k) => pipe.PipelineGetAsync<T>(k, nextPipe);
+            {
+                var np = nextPipe;
+                nextPipe = (k) => pipe.PipelineGetAsync<T>(k, np);
+            }
 
             return nextPipe(key);
         }
