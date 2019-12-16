@@ -124,7 +124,7 @@ namespace XPike.Configuration
                 if (typeof(T) == typeof(DateTime))
                     return (T) (object) DateTime.Parse(value, DateTimeFormatInfo.InvariantInfo);
 
-                return string.IsNullOrWhiteSpace(value) ? default : JsonConvert.DeserializeObject<T>(value);
+                return JsonConvert.DeserializeObject<T>(value);
             }
             catch (Exception ex)
             {

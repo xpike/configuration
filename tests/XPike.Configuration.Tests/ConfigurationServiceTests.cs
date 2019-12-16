@@ -53,6 +53,52 @@ namespace XPike.Configuration.Tests
         }
 
         [Fact]
+        public async Task Test_GetObjectOrDefaultAsync()
+        {
+            var service = CreateService();
+            Assert.NotNull(service);
+
+            var time = DateTime.UtcNow;
+
+            var testObj = new TestObject
+            {
+                Name = "Default",
+                Time = time
+            };
+
+            var obj = await service.GetValueOrDefaultAsync("Some.Library.Config.NotThere", testObj);
+
+            Assert.NotNull(obj);
+            Assert.StrictEqual(testObj, obj);
+
+            Assert.Equal("Default", obj.Name);
+            Assert.Equal(time, obj.Time);
+        }
+
+        [Fact]
+        public void Test_GetObjectOrDefault()
+        {
+            var service = CreateService();
+            Assert.NotNull(service);
+
+            var time = DateTime.UtcNow;
+
+            var testObj = new TestObject
+            {
+                Name = "Default",
+                Time = time
+            };
+
+            var obj = service.GetValueOrDefault("Some.Library.Config.NotThere", testObj);
+
+            Assert.NotNull(obj);
+            Assert.StrictEqual(testObj, obj);
+
+            Assert.Equal("Default", obj.Name);
+            Assert.Equal(time, obj.Time);
+        }
+
+        [Fact]
         public async Task Test_GetObject_CaseSensitiveAsync()
         {
             var service = CreateService();

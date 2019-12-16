@@ -15,17 +15,29 @@ namespace XPikeConfig.Controllers
         private readonly IConfiguration _config;
         private readonly IConfig<SomeConfig> _someConfig;
         private readonly IConfig<AnotherConfig> _anotherConfig;
-        public HomeController(IConfigurationService configService, IConfiguration config, IConfig<SomeConfig> someConfig, IConfig<AnotherConfig> anotherConfig)
+        private readonly IConfigManager<MissingConfig> _missingConfig;
+
+        public HomeController(IConfigurationService configService, 
+            IConfiguration config,
+            IConfig<SomeConfig> someConfig, 
+            IConfig<AnotherConfig> anotherConfig,
+            IConfigManager<MissingConfig> missingConfig)
         {
             _configService = configService;
             _config = config;
             _someConfig = someConfig;
             _anotherConfig = anotherConfig;
+            _missingConfig = missingConfig;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
             ViewData["config"] = JsonConvert.SerializeObject(await _configService.GetValueAsync<SomeConfig>("Example.Library.SomeConfig"));
+            ViewData["missingConfig"] = _missingConfig.GetConfigOrDefault(new MissingConfig {Name = "Default"})
+                .GetLatestValue()
+                .Name;
+
+            ViewData["missingConfigAsync"] = (await (await _missingConfig.GetConfigOrDefaultAsync(new MissingConfig {Name = "Default"})).GetLatestValueAsync()).Name;
 
             // NOTE: Test not entirely applicable - since IConfiguration does not support de-serialization from an individual key which stores a JSON string.
             //ViewData["config2"] = JsonConvert.SerializeObject(_config.GetSection("Example:Library:SomeConfig").Get<SomeConfig>());

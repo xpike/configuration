@@ -27,11 +27,15 @@ namespace XPike.Configuration.Microsoft
             if (section == null)
                 return null;
 
+            var children = section.GetChildren().ToList();
+            if (!children.Any())
+                return null;
+
             var sb = new StringBuilder();
             sb.Append("{");
 
             bool any = false;
-            foreach(var item in section.GetChildren())
+            foreach (var item in children)
             {
                 sb.AppendLine(any ? "," : string.Empty);
 
