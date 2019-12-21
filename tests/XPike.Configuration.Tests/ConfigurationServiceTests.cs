@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using XPike.Configuration.Memory;
 using Xunit;
 
@@ -29,7 +30,29 @@ namespace XPike.Configuration.Tests
                         {"Some.Bool", true.ToString()},
                         {"Some.Int", _testInt.ToString()},
                         {"Some.TimeSpan", _testTimeSpan.ToString()},
-                        {"Some.Decimal", _testDecimal.ToString(CultureInfo.InvariantCulture)}
+                        {"Some.Decimal", _testDecimal.ToString(CultureInfo.InvariantCulture)},
+                        {
+                            "XPike.Configuration.Tests.TestConfig", JsonConvert.SerializeObject(new TestConfig
+                            {
+                                Groups = new Dictionary<string, Dictionary<string, string>>
+                                {
+                                    {
+                                        "Group1", new Dictionary<string, string>
+                                        {
+                                            {"item1", "value1"},
+                                            {"item2", "value2"}
+                                        }
+                                    },
+                                    {
+                                        "Group2", new Dictionary<string, string>
+                                        {
+                                            {"item1", "group2value1"},
+                                            {"item2", "group2value2"}
+                                        }
+                                    }
+                                }
+                            })
+                        }
                     }))
                 .Build();
 
@@ -50,6 +73,20 @@ namespace XPike.Configuration.Tests
             Assert.NotNull(obj);
             Assert.Equal(obj.Name, _EXPECTED_NAME);
             Assert.Equal(obj.Time, _testDateTime);
+        }
+
+        [Fact]
+        public async Task Test_GetTestConfigAsync()
+        {
+            var service = CreateService();
+            var configManager = new ConfigManager<TestConfig>(service);
+            Assert.NotNull(service);
+
+            var obj = await configManager.GetConfigAsync();
+
+            Assert.NotNull(obj);
+            Assert.NotEmpty(obj.CurrentValue.Groups.Values);
+            Assert.Equal("group2value2", obj.CurrentValue.Groups["Group2"]["item2"]);
         }
 
         [Fact]
