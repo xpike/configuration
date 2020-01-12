@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace XPike.Configuration.Microsoft
 {
@@ -21,6 +22,9 @@ namespace XPike.Configuration.Microsoft
         {
             _configuration = configuration;
         }
+
+        protected override T Deserialize<T>(string value) =>
+            JsonConvert.DeserializeObject<T>(value, new NetCoreDictionaryToArrayJsonConverter());
 
         private string CreateJson(IConfigurationSection section)
         {

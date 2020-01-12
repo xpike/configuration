@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\XPike.Configuration.Microsoft\XPike.Configuration.Microsoft.csproj" />
     <ProjectReference Include="..\..\src\XPike.Configuration\XPike.Configuration.csproj" />
   </ItemGroup>
 

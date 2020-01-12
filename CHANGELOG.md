@@ -1,5 +1,19 @@
 # Change Log
 
+## [1.2.0]
+
+- `ConfigurationProviderBase` now has an overridable `Deserialize<T>()` method
+- `MicrosoftConfigurationProvider` properly supports `Array` deserialization
+- Added tests for `NetCoreDictionaryToArrayJsonConverter`, the deserializer used by `MicrosoftConfigurationProvider`
+- Added `StaticConfig<T>`, which does not rely on an `IConfigurationService` instance, intended to allow an `IConfig<T>` to be injected from a specific instance such as a hard-coded POCO instantiation
+
+## [1.1.6]
+
+- `MicrosoftConfigurationProvider` now properly supports object deserialization
+- Added tests for object deserialization
+- When deserializing an object whose key is missing, a default value is now returned if provided, or an `InvalidConfigurationException` is now thrown instead of returning null
+- Added support in `ConfigurationServiceBase` for configuration middleware applied after DI container construction via `IDependencyProvider.AddConfigurationPipe<IConfigurationPipe>()` and `IConfigurationService.AddToPipeline(IConfigurationPipe)`
+
 ## [1.1.1]
 
 - Changed `IConfig<T>` to be a singleton injection by default.

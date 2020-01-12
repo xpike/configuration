@@ -3,18 +3,59 @@
 [![Build Status](https://dev.azure.com/xpike/xpike/_apis/build/status/xpike-configuration?branchName=master)](https://dev.azure.com/xpike/xpike/_build/latest?definitionId=3&branchName=master)
 ![Nuget](https://img.shields.io/nuget/v/XPike.Configuration)
 
-Provides basic application configuration support for XPike.
+This library provides a standardized surface for configuration within XPike.
 
-XPike Configuration is intended for use before Dependency Injection is configured, to provide some basic bootstrap settings.
-Because of this, *Configuration Providers should not require injected dependencies.*
+Out-of-box support:
+- System environment variables
+- Web.config / App.config
+- appsettings.json
+- In-memory/hardcoded key-value pair
+- Microsoft Extensions / .NET Core `IConfiguration`
+- AWS Simple Configuration Service
+- Azure Application Configuration Service
 
+> Additionally, support for `IConfiguration` is bi-directional by default - both XPike and
+> Microsoft libraries will have access to the combined result of providers from both systems.
+
+Use cases:
+- Provides bootstrap-time configuration in `Program.cs`/`Startup.cs`/`Global.asax`
+- Provides configuration for most XPike functionality
+- A fast, lightweight option for application-level configuration
+
+> Because XPike Configuration is available prior to creating a Dependency Injection container,
+> XPike Configuration Providers can't require any injected dependencies.
+
+Similar to ASP.NET Middleware, the default implementation of the XPike Configuration Service
+has an extensible async pipeline at its core.  As with the Provider list, this can be modified
+at runtime, allowing for capabilities to be added after Dependency Injection is available.
+
+Available pipeline enhancements:
+- XPike Caching support
+  - Uses an n-tier cache (eg: in-memory + redis) with distributed invalidation to allow 
+    nodes to keep their settings highly synchronized while reducing the burden of using 
+    a remote configuration source such as AWS or Azure.
+- XPike Multi-Tenant support
+  - Allows for per-tenant settings overrides to support multi-tenancy throughout XPike as 
+    well as within application-level settings.
+
+Design Notes:
+
+The root of the system is the Configuration Service:
+- 
+.  This has an async pipeline with a list of pipeline.  Pipeline
+components are executed starting with the most-recently-added component and ending with an
+internal implementation.  
 Providers are wrapped by the **Configuration Service** which scans them in reverse order, returning the first value it finds.
 While Providers can be used directly, the Configuration Service should be your go-to (and it is compatible with .NET Core `IConfiguration`).
 
 Though the Configuration Service does not rely on DI, it is intended to be registered with the container along with any Providers.
 This is because XPike Settings (which adds capabilities such as caching and refresh - similar to .NET Core `IOptions`) relys on the Configuration Service as its default Settings Provider. 
 
-For application-oriented settings, it is recommended to use the `XPike.Settings` Package to retrieve a settings POCO.
+XPike Configuration can also be extended/enhanced by adding to its async pipeline.
+Currently, there are pipeline components to add XPike Caching and XPike Multi-Tenant support.
+
+While XPike Configuration offers POCO deserialization, it is recommended to use the `XPike.Settings` Package to retrieve application settings.
+XPike Settings uses XPike Configuration as one of its sources, but you can also add additional providers which _can_ have injected dependencies.
 
 ## Setup
 

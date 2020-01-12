@@ -124,13 +124,16 @@ namespace XPike.Configuration
                 if (typeof(T) == typeof(DateTime))
                     return (T) (object) DateTime.Parse(value, DateTimeFormatInfo.InvariantInfo);
 
-                return JsonConvert.DeserializeObject<T>(value);
+                return Deserialize<T>(value);
             }
             catch (Exception ex)
             {
                 throw new InvalidConfigurationException(key, ex);
             }
         }
+
+        protected virtual T Deserialize<T>(string value) =>
+            JsonConvert.DeserializeObject<T>(value);
 
         public virtual async Task<T> GetValueAsync<T>(string key)
         {
