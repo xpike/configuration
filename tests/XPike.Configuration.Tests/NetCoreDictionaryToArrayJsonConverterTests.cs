@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using XPike.Configuration.Microsoft;
@@ -35,6 +36,36 @@ namespace XPike.Configuration.Tests
             public MyClass2[] MyArray { get; set; }
         }
 
+        public class MyClassL
+        {
+            public List<int> MyArray { get; set; }
+        }
+
+        public class MyClassL3
+        {
+            public List<MyClass2> MyArray { get; set; }
+        }
+
+        public class MyClassE
+        {
+            public IEnumerable<int> MyArray { get; set; }
+        }
+
+        public class MyClassE3
+        {
+            public IEnumerable<MyClass2> MyArray { get; set; }
+        }
+
+        public class MyClassI
+        {
+            public IList<int> MyArray { get; set; }
+        }
+
+        public class MyClassI3
+        {
+            public IList<MyClass2> MyArray { get; set; }
+        }
+
         public class MyClass2
         {
             public string Name { get; set; }
@@ -50,23 +81,60 @@ namespace XPike.Configuration.Tests
             for (var i = 0; i < 10000; ++i)
                 obj = JsonConvert.DeserializeObject<MyClass>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
             sw.Stop();
-            _testOutputHelper.WriteLine($"Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
+            _testOutputHelper.WriteLine($"MS Array Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
             Assert.True(sw.Elapsed.TotalMilliseconds < 200);
 
             sw.Restart();
             for (var i = 0; i < 10000; ++i)
                 obj = JsonConvert.DeserializeObject<MyClass>(_RAW_JSON_2);
             sw.Stop();
-            _testOutputHelper.WriteLine($"Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
+            _testOutputHelper.WriteLine($"Raw Array Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
             Assert.True(sw.Elapsed.TotalMilliseconds < 60);
+
+            sw.Restart();
+            MyClassI iobj;
+            for (var i = 0; i < 10000; ++i)
+                iobj = JsonConvert.DeserializeObject<MyClassI>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
+            sw.Stop();
+            _testOutputHelper.WriteLine($"MS IList Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
+
+            sw.Restart();
+            for (var i = 0; i < 10000; ++i)
+                iobj = JsonConvert.DeserializeObject<MyClassI>(_RAW_JSON_2);
+            sw.Stop();
+            _testOutputHelper.WriteLine($"Raw IList Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
+
+            sw.Restart();
+            MyClassL lobj;
+            for (var i = 0; i < 10000; ++i)
+                lobj = JsonConvert.DeserializeObject<MyClassL>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
+            sw.Stop();
+            _testOutputHelper.WriteLine($"MS List Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
+
+            sw.Restart();
+            for (var i = 0; i < 10000; ++i)
+                lobj = JsonConvert.DeserializeObject<MyClassL>(_RAW_JSON_2);
+            sw.Stop();
+            _testOutputHelper.WriteLine($"Raw List Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
+
+            sw.Restart();
+            MyClassE eobj;
+            for (var i = 0; i < 10000; ++i)
+                eobj = JsonConvert.DeserializeObject<MyClassE>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
+            sw.Stop();
+            _testOutputHelper.WriteLine($"MS Enumerable Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
+
+            sw.Restart();
+            for (var i = 0; i < 10000; ++i)
+                eobj = JsonConvert.DeserializeObject<MyClassE>(_RAW_JSON_2);
+            sw.Stop();
+            _testOutputHelper.WriteLine($"Raw Enumerable Elapsed: {sw.Elapsed.TotalMilliseconds}ms");
         }
 
         [Fact]
         public void BasicTest()
         {
-            MyClass obj;
-
-            obj = JsonConvert.DeserializeObject<MyClass>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
+            var obj = JsonConvert.DeserializeObject<MyClass>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
             var output1 = JsonConvert.SerializeObject(obj);
             _testOutputHelper.WriteLine($"{output1}");
 
@@ -75,14 +143,42 @@ namespace XPike.Configuration.Tests
             _testOutputHelper.WriteLine($"{output2}");
 
             Assert.Equal(output1, output2);
+
+            var eobj = JsonConvert.DeserializeObject<MyClassE>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(eobj);
+            _testOutputHelper.WriteLine($"{output1}");
+
+            eobj = JsonConvert.DeserializeObject<MyClassE>(_RAW_JSON_2);
+            output2 = JsonConvert.SerializeObject(eobj);
+            _testOutputHelper.WriteLine($"{output2}");
+
+            Assert.Equal(output1, output2);
+
+            var iobj = JsonConvert.DeserializeObject<MyClassI>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(iobj);
+            _testOutputHelper.WriteLine($"{output1}");
+
+            iobj = JsonConvert.DeserializeObject<MyClassI>(_RAW_JSON_2);
+            output2 = JsonConvert.SerializeObject(iobj);
+            _testOutputHelper.WriteLine($"{output2}");
+
+            Assert.Equal(output1, output2);
+
+            var lobj = JsonConvert.DeserializeObject<MyClassL>(_RAW_JSON, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(lobj);
+            _testOutputHelper.WriteLine($"{output1}");
+
+            lobj = JsonConvert.DeserializeObject<MyClassL>(_RAW_JSON_2);
+            output2 = JsonConvert.SerializeObject(lobj);
+            _testOutputHelper.WriteLine($"{output2}");
+
+            Assert.Equal(output1, output2);
         }
 
         [Fact]
         public void NullabilityTest()
         {
-            MyClass obj;
-
-            obj = JsonConvert.DeserializeObject<MyClass>(_RAW_JSON_N, new NetCoreDictionaryToArrayJsonConverter());
+            var obj = JsonConvert.DeserializeObject<MyClass>(_RAW_JSON_N, new NetCoreDictionaryToArrayJsonConverter());
             var output1 = JsonConvert.SerializeObject(obj);
             _testOutputHelper.WriteLine($"{output1}");
 
@@ -91,17 +187,77 @@ namespace XPike.Configuration.Tests
             _testOutputHelper.WriteLine($"{output2}");
 
             Assert.Equal(output1, output2);
+
+            var eobj = JsonConvert.DeserializeObject<MyClassE>(_RAW_JSON_N, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(eobj);
+            _testOutputHelper.WriteLine($"{output1}");
+
+            eobj = JsonConvert.DeserializeObject<MyClassE>(_RAW_JSON_N2);
+            output2 = JsonConvert.SerializeObject(eobj);
+            _testOutputHelper.WriteLine($"{output2}");
+
+            Assert.Equal(output1, output2);
+
+            var iobj = JsonConvert.DeserializeObject<MyClassI>(_RAW_JSON_N, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(iobj);
+            _testOutputHelper.WriteLine($"{output1}");
+
+            iobj = JsonConvert.DeserializeObject<MyClassI>(_RAW_JSON_N2);
+            output2 = JsonConvert.SerializeObject(iobj);
+            _testOutputHelper.WriteLine($"{output2}");
+
+            Assert.Equal(output1, output2);
+
+            var lobj = JsonConvert.DeserializeObject<MyClassL>(_RAW_JSON_N, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(lobj);
+            _testOutputHelper.WriteLine($"{output1}");
+
+            lobj = JsonConvert.DeserializeObject<MyClassL>(_RAW_JSON_N2);
+            output2 = JsonConvert.SerializeObject(lobj);
+            _testOutputHelper.WriteLine($"{output2}");
+
+            Assert.Equal(output1, output2);
         }
 
         [Fact]
         public void ComplexObjectTest()
         {
-            MyClass3 obj2 = JsonConvert.DeserializeObject<MyClass3>(_RAW_JSON_M, new NetCoreDictionaryToArrayJsonConverter());
+            var obj2 = JsonConvert.DeserializeObject<MyClass3>(_RAW_JSON_M, new NetCoreDictionaryToArrayJsonConverter());
             var output1 = JsonConvert.SerializeObject(obj2);
             _testOutputHelper.WriteLine(output1);
 
             obj2 = JsonConvert.DeserializeObject<MyClass3>(_RAW_JSON_M2);
             var output2 = JsonConvert.SerializeObject(obj2);
+            _testOutputHelper.WriteLine(output2);
+
+            Assert.Equal(output1, output2);
+
+            var eobj2 = JsonConvert.DeserializeObject<MyClassE3>(_RAW_JSON_M, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(eobj2);
+            _testOutputHelper.WriteLine(output1);
+
+            eobj2 = JsonConvert.DeserializeObject<MyClassE3>(_RAW_JSON_M2);
+            output2 = JsonConvert.SerializeObject(eobj2);
+            _testOutputHelper.WriteLine(output2);
+
+            Assert.Equal(output1, output2);
+
+            var iobj2 = JsonConvert.DeserializeObject<MyClassI3>(_RAW_JSON_M, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(iobj2);
+            _testOutputHelper.WriteLine(output1);
+
+            iobj2 = JsonConvert.DeserializeObject<MyClassI3>(_RAW_JSON_M2);
+            output2 = JsonConvert.SerializeObject(iobj2);
+            _testOutputHelper.WriteLine(output2);
+
+            Assert.Equal(output1, output2);
+
+            var lobj2 = JsonConvert.DeserializeObject<MyClassL3>(_RAW_JSON_M, new NetCoreDictionaryToArrayJsonConverter());
+            output1 = JsonConvert.SerializeObject(lobj2);
+            _testOutputHelper.WriteLine(output1);
+
+            lobj2 = JsonConvert.DeserializeObject<MyClassL3>(_RAW_JSON_M2);
+            output2 = JsonConvert.SerializeObject(lobj2);
             _testOutputHelper.WriteLine(output2);
 
             Assert.Equal(output1, output2);

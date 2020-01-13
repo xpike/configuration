@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.1]
+
+- `MicrosoftConfigurationProvider` properly supports `List`, `IList`, and `IEnumerable` deserialization from an array
+
 ## [1.2.0]
 
 - `ConfigurationProviderBase` now has an overridable `Deserialize<T>()` method

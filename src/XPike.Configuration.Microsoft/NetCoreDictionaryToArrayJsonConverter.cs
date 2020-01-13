@@ -19,7 +19,7 @@ namespace XPike.Configuration.Microsoft
             if (reader.TokenType == JsonToken.Null)
                 return null;
 
-            var elementType = objectType.GetElementType();
+            var elementType = objectType.IsArray ? objectType.GetElementType() : objectType.GenericTypeArguments[0];
             var transientType = elementType;
 
             if (elementType.IsPrimitive)
@@ -37,6 +37,9 @@ namespace XPike.Configuration.Microsoft
                 list.Add(Convert.ChangeType(item, elementType));
             }
 
+            if (!objectType.IsArray)
+                return list;
+
             var result = Array.CreateInstance(elementType, list.Count);
 
             var index = 0;
@@ -47,6 +50,9 @@ namespace XPike.Configuration.Microsoft
         }
 
         public override bool CanConvert(Type objectType) =>
-            objectType.IsArray;
+            objectType.IsArray ||
+            (objectType.IsGenericType &&
+             (objectType.IsAssignableFrom(objectType.GenericTypeArguments[0].MakeArrayType()) ||
+              objectType.IsAssignableFrom(typeof(List<>).MakeGenericType(objectType.GenericTypeArguments[0]))));
     }
 }
