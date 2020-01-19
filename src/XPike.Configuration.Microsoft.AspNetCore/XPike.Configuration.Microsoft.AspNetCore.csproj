@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../common.build.props"/>
+  <Import Project="../common.build.props" />
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Description>xPike Configuration - Microsoft.Extensions.Configuration Provider and Asp.Net Core</Description>
@@ -13,8 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.1.0" />
     <PackageReference Include="XPike.Extensions.DependencyInjection" Version="1.0.17" />
-    <PackageReference Include="XPike.IoC" Version="1.0.3" />
-    <PackageReference Include="XPike.IoC.Microsoft" Version="1.0.3" />
+    <PackageReference Include="XPike.IoC" Version="1.0.4" />
+    <PackageReference Include="XPike.IoC.Microsoft" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

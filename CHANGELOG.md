@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.2.2]
+
+- Updated to latest `XPike.IoC` package
+- Uses `MicrosoftDependencyCollection` "shim mode" to register with `IServiceCollection`
+
 ## [1.2.1]
 
 - `MicrosoftConfigurationProvider` properly supports `List`, `IList`, and `IEnumerable` deserialization from an array

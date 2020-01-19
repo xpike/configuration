@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../common.build.props"/>
+  <Import Project="../common.build.props" />
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <Description>xPike Configuration - System.Configuration Provider</Description>
@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="XPike.IoC" Version="1.0.3"/>
+    <PackageReference Include="XPike.IoC" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../common.build.props"/>
+  <Import Project="../common.build.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>xPike Configuration provider for Azure Application Configuration Service.</Description>
@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Data.AppConfiguration" Version="1.0.0-preview.4" />
-    <PackageReference Include="XPike.IoC" Version="1.0.3"/>
+    <PackageReference Include="XPike.IoC" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

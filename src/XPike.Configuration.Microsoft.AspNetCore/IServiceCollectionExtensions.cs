@@ -22,7 +22,7 @@ namespace XPike.Configuration.Microsoft.AspNetCore
         /// <returns></returns>
         public static IServiceCollection AddXPikeConfiguration(this IServiceCollection collection, IDictionary<string, string> staticConfig = null)
         {
-            new MicrosoftDependencyCollection(collection).AddXPikeConfiguration(staticConfig);
+            new MicrosoftDependencyCollection(collection, false, false).AddXPikeConfiguration(staticConfig);
             return collection;
         }
 
@@ -37,7 +37,7 @@ namespace XPike.Configuration.Microsoft.AspNetCore
         /// <returns></returns>
         public static IServiceCollection AddXPikeConfiguration(this IServiceCollection collection, Action<IXPikeConfigBuilder> providerSetup)
         {
-            new MicrosoftDependencyCollection(collection).AddXPikeConfiguration(providerSetup);
+            new MicrosoftDependencyCollection(collection, false, false).AddXPikeConfiguration(providerSetup);
             return collection;
         }
 
@@ -55,7 +55,7 @@ namespace XPike.Configuration.Microsoft.AspNetCore
             IDictionary<string, string> staticConfig = null,
             IConfiguration configuration = null)
         {
-            new MicrosoftDependencyCollection(collection).AddXPikeMicrosoftConfiguration(staticConfig, configuration);
+            new MicrosoftDependencyCollection(collection, false, false).AddXPikeMicrosoftConfiguration(staticConfig, configuration);
             return collection;
         }
 
@@ -73,7 +73,7 @@ namespace XPike.Configuration.Microsoft.AspNetCore
             IDictionary<string, string> staticConfig = null,
             IConfiguration configuration = null)
         {
-            new MicrosoftDependencyCollection(collection).UseMicrosoftConfigurationForXPike(staticConfig, configuration);
+            new MicrosoftDependencyCollection(collection, false, false).UseMicrosoftConfigurationForXPike(staticConfig, configuration);
             return collection;
         }
     }
