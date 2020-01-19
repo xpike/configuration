@@ -24,7 +24,7 @@ namespace XPike.Configuration.Microsoft
         }
 
         protected override T Deserialize<T>(string value) =>
-            JsonConvert.DeserializeObject<T>(value, new NetCoreDictionaryToArrayJsonConverter());
+            JsonConvert.DeserializeObject<T>(value, new AppSettingsArrayJsonConverter());
 
         private string CreateJson(IConfigurationSection section)
         {

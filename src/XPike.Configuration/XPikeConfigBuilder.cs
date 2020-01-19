@@ -8,9 +8,10 @@ namespace XPike.Configuration
     {
         private readonly IList<IConfigurationProvider> _providers;
 
-        public XPikeConfigBuilder()
+        public XPikeConfigBuilder(Action<IXPikeConfigBuilder> configure = null)
         {
             _providers = new List<IConfigurationProvider>();
+            configure?.Invoke(this);
         }
 
         public IConfigurationService ConfigurationService { get; private set; }

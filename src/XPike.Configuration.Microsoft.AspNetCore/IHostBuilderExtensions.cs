@@ -1,12 +1,12 @@
 ﻿using System;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace XPike.Configuration.Microsoft.AspNetCore
 {
     /// <summary>
     /// Extension methods to setup both XPike Configuration.
     /// </summary>
-    public static class IWebHostBuilderExtensions
+    public static class IHostBuilderExtensions
     {
         /// <summary>
         /// Registers XPike Configuration as a provider for Microsoft Extensions IConfiguration using
@@ -18,7 +18,7 @@ namespace XPike.Configuration.Microsoft.AspNetCore
         /// <param name="hostBuilder"></param>
         /// <param name="providerSetup"></param>
         /// <returns></returns>
-        public static IWebHostBuilder UseXPikeConfiguration(this IWebHostBuilder hostBuilder,
+        public static IHostBuilder UseXPikeConfiguration(this IHostBuilder hostBuilder,
             Action<IXPikeConfigBuilder> providerSetup = null) =>
             hostBuilder.ConfigureAppConfiguration((context, configBuilder) =>
                     configBuilder.AddXPikeConfiguration(providerSetup))

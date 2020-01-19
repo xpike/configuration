@@ -5,7 +5,11 @@ using Newtonsoft.Json;
 
 namespace XPike.Configuration.Microsoft
 {
-    public class NetCoreDictionaryToArrayJsonConverter
+    /// <summary>
+    /// Provides proper deserialization of arrays within a JSON-serialized IConfigSection.
+    /// Supports deserializing collections of any object type into an array or into a generic IList / List / IEnumerable.
+    /// </summary>
+    public class AppSettingsArrayJsonConverter
         : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>

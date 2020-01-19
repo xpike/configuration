@@ -1,22 +1,28 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using XPike.Configuration.Microsoft.AspNetCore;
-using XPike.Configuration.Memory;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Example.Library;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using XPike.Configuration.Memory;
+using XPike.Configuration.Microsoft.AspNetCore;
 
-namespace XPikeConfig
+namespace XPikeConfig22
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseXPikeConfiguration(config =>
                 {
                     config.AddProvider(new MemoryConfigurationProvider(new Dictionary<string, string>
@@ -47,6 +53,6 @@ namespace XPikeConfig
                         {"Example.Library.SomeConfig::SomeDate", "10/28/2019 2:21:40 AM"}
                     }));
                 })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .UseStartup<Startup>();
     }
 }

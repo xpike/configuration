@@ -3,33 +3,29 @@ using Microsoft.Extensions.Configuration;
 
 namespace XPike.Configuration.Microsoft.AspNetCore
 {
+    /// <summary>
+    /// Extension methods to configure XPike to provide settings to Microsoft.Extensions IConfiguration.
+    /// </summary>
     public static class IConfigurationBuilderExtensions
     {
         /// <summary>
-        /// Adds XPike Configuration to the IConfigurationBuilder so that IConfiguration can
-        /// retrieve configuration values from the XPike Configuration Service.
+        /// Adds an XPike IConfigurationService as a source for Microsoft.Extensions.IConfiguration.
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="configService"></param>
         /// <returns></returns>
         public static IConfigurationBuilder AddXPikeConfiguration(this IConfigurationBuilder builder, IConfigurationService configService) =>
+            // Add the IConfigurationService as a Source to the IConfigurationBuilder - this shims into Microsoft IConfiguration and wires-up the xPike Providers.
             builder.Add(new XPikeConfigurationSource(configService));
 
-        public static IConfigurationBuilder ConfigureXPikeConfiguration(this IConfigurationBuilder builder, Action<IXPikeConfigBuilder> configBuilderSetup)
-        {
-            // Create our xPike Config Builder
-            var configBuilder = new XPikeConfigBuilder();
-
-            // Call our setup action - this is where someone invoking AddXPikeLogging registers their Providers.
-            configBuilderSetup(configBuilder);
-
-            // Construct the initial ConfigurationService.  This is only used to feed values into Microsoft IConfiguration.
-            var xpikeConfig = configBuilder.Build();
-
-            // Add the actual xPike Configuration Source - this is the shim into Microsoft IConfiguration that actually wires-up our registered xPike Providers
-            builder.Add(new XPikeConfigurationSource(xpikeConfig));
-
-            return builder;
-        }
+        /// <summary>
+        /// Configures a new XPike IConfigurationService and adds it as a source for Microsoft.Extensions.IConfiguration.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="xpikeProviderSetup"></param>
+        /// <returns></returns>
+        public static IConfigurationBuilder AddXPikeConfiguration(this IConfigurationBuilder builder, Action<IXPikeConfigBuilder> xpikeProviderSetup = null) =>
+            // Construct and configure providers in the IConfigurationService.  This is used to feed values into Microsoft IConfiguration.
+            builder.AddXPikeConfiguration(new XPikeConfigBuilder(xpikeProviderSetup).Build());
     }
 }
