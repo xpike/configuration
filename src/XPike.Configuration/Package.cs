@@ -57,10 +57,10 @@ namespace XPike.Configuration
             if (_configuration != null)
             {
                 dependencyCollection.RegisterSingleton<IMemoryConfigurationProvider>(new MemoryConfigurationProvider(_configuration));
-                dependencyCollection.AddSingletonToCollection<IConfigurationProvider, MemoryConfigurationProvider>(provider => provider.ResolveDependency<IMemoryConfigurationProvider>());
+                dependencyCollection.AddSingletonToCollection<IConfigurationProvider, IMemoryConfigurationProvider>(provider => provider.ResolveDependency<IMemoryConfigurationProvider>());
             }
 
-            dependencyCollection.AddSingletonToCollection<IConfigurationProvider, EnvironmentConfigurationProvider>((provider) => {
+            dependencyCollection.AddSingletonToCollection<IConfigurationProvider, IEnvironmentConfigurationProvider>((provider) => {
                 return provider.ResolveDependency<IEnvironmentConfigurationProvider>();
             });
 

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.3.0]
+
+- Add examples for MS and SI DI containers for netcore22/netcore3
+- Fix up some chained collection registrations
+- Update to latest XPike.IoC packages
+
 ## [1.2.2]
 
 - Updated to latest `XPike.IoC` package

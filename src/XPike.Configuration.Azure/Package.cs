@@ -29,7 +29,7 @@ namespace XPike.Configuration.Azure
             dependencyCollection.LoadPackage(new XPike.Configuration.Package());
 
             dependencyCollection.RegisterSingleton<IAzureConfigurationProvider>(new AzureConfigurationProvider(_connectionString));
-            dependencyCollection.AddSingletonToCollection<IConfigurationProvider, AzureConfigurationProvider>(provider => provider.ResolveDependency<IAzureConfigurationProvider>());
+            dependencyCollection.AddSingletonToCollection<IConfigurationProvider, IAzureConfigurationProvider>(provider => provider.ResolveDependency<IAzureConfigurationProvider>());
         }
     }
 }

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="XPike.IoC" Version="1.0.4" />
+    <PackageReference Include="XPike.IoC" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>

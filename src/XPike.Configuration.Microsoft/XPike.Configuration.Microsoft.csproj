@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
-    <PackageReference Include="XPike.IoC" Version="1.0.4" />
+    <PackageReference Include="XPike.IoC" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>

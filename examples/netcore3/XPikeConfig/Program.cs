@@ -5,6 +5,7 @@ using XPike.Configuration.Memory;
 using System.Collections.Generic;
 using Example.Library;
 using Newtonsoft.Json;
+using XPike.IoC.SimpleInjector.AspNetCore;
 
 namespace XPikeConfig
 {
@@ -47,6 +48,7 @@ namespace XPikeConfig
                         {"Example.Library.SomeConfig::SomeDate", "10/28/2019 2:21:40 AM"}
                     }));
                 })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .AddXPikeDependencyInjection();
     }
 }

@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+        <table>
+            <tr>
+                <td>XPike - De-serialize from XPike Provider:</td>
+                <td>@ViewData["config"]</td>
+            </tr>
+            <tr>
+                <td>Microsoft - Load JSON string <strike>De-serialize</strike> from XPike Provider:</td>
+                <td>@ViewData["config2"]</td>
+            </tr>
+            <tr>
+                <td>XPike - Object Property Access from XPike Provider:</td>
+                <td>@ViewData["config3"]</td>
+            </tr>
+            <tr>
+                <td>Microsoft - Object Property Access from XPike Provider:</td>
+                <td>@ViewData["config4"]</td>
+            </tr>
+            <tr>
+                <td>XPike - De-serialize from Microsoft Provider:</td>
+                <td>@ViewData["config2-1"]</td>
+            </tr>
+            <tr>
+                <td>Microsoft - De-serialize from Microsoft Provider:</td>
+                <td>@ViewData["config2-2"]</td>
+            </tr>
+            <tr>
+                <td>XPike - Object Property Access from Microsoft Provider:</td>
+                <td>@ViewData["config2-3"]</td>
+            </tr>
+            <tr>
+                <td>Microsoft - Object Property Access from Microsoft Provider:</td>
+                <td>@ViewData["config2-4"]</td>
+            </tr>
+            <tr>
+                <td>XPike - Individual value from XPike Provider:</td>
+                <td>@ViewData["value1"]</td>
+            </tr>
+            <tr>
+                <td>Microsoft - Individual value from XPike Provider:</td>
+                <td>@ViewData["value2"]</td>
+            </tr>
+            <tr>
+                <td>XPike - Individual value from Microsoft Provider:</td>
+                <td>@ViewData["value2-1"]</td>
+            </tr>
+            <tr>
+                <td>Microsoft - Individual value from Microsoft Provider:</td>
+                <td>@ViewData["value2-2"]</td>
+            </tr>
+            <tr>
+                <td>Via IConfig<> - From XPike Provider:</td>
+                <td>@ViewData["someconfig"]</td>
+            </tr>
+            <tr>
+                <td>Via IConfig<> - From Microsoft Provider:</td>
+                <td>@ViewData["anotherconfig"]</td>
+            </tr>
+            <tr>
+                <td>Missing Config:</td>
+                <td>@ViewData["missingConfig"]</td>
+            </tr>
+            <tr>
+                <td>Missing Config Async:</td>
+                <td>@ViewData["missingConfigAsync"]</td>
+            </tr>
+        </table>
+    </div>
