@@ -13,8 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.1.0" />
     <PackageReference Include="XPike.Extensions.DependencyInjection" Version="1.0.17" />
-    <PackageReference Include="XPike.IoC" Version="1.1.1" />
-    <PackageReference Include="XPike.IoC.Microsoft" Version="1.1.1" />
+    <PackageReference Include="XPike.IoC" Version="1.1.2" />
+    <PackageReference Include="XPike.IoC.Microsoft" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>

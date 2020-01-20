@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.3.1]
+
+- Updated to latest XPike.IoC package to use one-line IoC configuration
+
 ## [1.3.0]
 
 - Add examples for MS and SI DI containers for netcore22/netcore3

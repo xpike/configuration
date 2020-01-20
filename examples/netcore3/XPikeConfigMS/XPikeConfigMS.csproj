@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="XPike.IoC.Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="XPike.IoC.Microsoft.AspNetCore" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>

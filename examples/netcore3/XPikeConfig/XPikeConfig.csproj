@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="XPike.Extensions.DependencyInjection" Version="1.0.17" />
-    <PackageReference Include="XPike.IoC.SimpleInjector.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="XPike.IoC.SimpleInjector.AspNetCore" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>
