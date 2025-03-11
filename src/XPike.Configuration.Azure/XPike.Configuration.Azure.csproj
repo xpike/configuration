@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Data.AppConfiguration" Version="1.0.0-preview.4" />
+    <PackageReference Include="Azure.Data.AppConfiguration" Version="1.6.0" />
     <PackageReference Include="XPike.IoC" Version="1.1.2" />
   </ItemGroup>
 
